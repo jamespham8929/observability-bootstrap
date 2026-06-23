@@ -32,3 +32,16 @@ jobs:
       - name: terraform validate
         run: terraform validate
         working-directory: terraform
+
+  tflint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: latest
+      - name: Init tflint
+        run: tflint --init
+      - name: Run tflint
+        run: tflint --recursive
