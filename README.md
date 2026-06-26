@@ -35,13 +35,31 @@ module "observability" {
 }
 ```
 
+Copy `terraform/terraform.tfvars.example` to `terraform/terraform.tfvars` and fill in
+your cluster name, Grafana password, and Alertmanager keys. The real `terraform.tfvars`
+is gitignored so secrets stay out of version control.
+
 ```bash
+cd terraform
+cp terraform.tfvars.example terraform.tfvars
 terraform init
 terraform plan
 terraform apply
 ```
 
 After apply, Grafana is accessible via the LoadBalancer output. Default dashboards for CPU, memory, network I/O, error rates, and request latency are pre-loaded.
+
+## Teardown
+
+```bash
+cd terraform
+terraform destroy
+```
+
+This removes the Helm releases and the monitoring namespace. Prometheus and Grafana
+PersistentVolumeClaims may be retained by the cluster's storage class. Delete them
+manually with `kubectl delete pvc -n monitoring --all` if you want the volumes
+reclaimed.
 
 ## Modules
 

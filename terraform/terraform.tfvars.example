@@ -1,0 +1,24 @@
+# Copy to terraform.tfvars and fill in your values.
+# terraform.tfvars is gitignored so secrets stay out of version control.
+
+# Required
+cluster_name           = "production"
+grafana_admin_password = "change-me"
+
+alertmanager_config = {
+  pagerduty_integration_key = "0123456789abcdef0123456789abcdef"
+  slack_webhook_url         = "https://hooks.slack.com/services/T000/B000/XXXX"
+  slack_channel             = "#alerts-production"
+}
+
+# Optional (defaults shown)
+monitoring_namespace      = "monitoring"
+prometheus_retention_days = 15
+prometheus_storage_size   = "50Gi"
+grafana_storage_size      = "10Gi"
+remote_write_url          = ""
+
+tags = {
+  team = "platform"
+  env  = "production"
+}
